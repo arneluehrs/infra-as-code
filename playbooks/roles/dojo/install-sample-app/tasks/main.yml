@@ -8,12 +8,17 @@
     repo: https://github.com/arneluehrs/HPE-VOTING-APP.git
     dest: /home/hos/HPE-VOTING-APP
 
-- name: Prime application -load images
-  shell: docker-compose pull
+- name: Prime application -load images redis
+  shell: docker pull redis:alpine
   args:
     chdir: /home/hos/HPE-VOTING-APP/
 
-- name: Prime application
+- name: Prime application -load images postgres
+  shell: docker pull postgres:9.4
+  args:
+    chdir: /home/hos/HPE-VOTING-APP/
+
+- name: Prime application (WARNING...this is SLOW.. go and have a coffee)
   shell: docker-compose build
   args:
     chdir: /home/hos/HPE-VOTING-APP/
