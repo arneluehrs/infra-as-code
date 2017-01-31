@@ -1,0 +1,12 @@
+- name: Install HPE CA certificates (UBUNTU specific)
+  template:
+    src: "{{item}}.pem"
+    dest: "/usr/local/share/ca-certificates/{{item}}.crt"
+  become: yes
+  with_items:
+    - hpe-root-ca
+    - hpe-ssl-ca
+
+- name: Link HPE CA certificates into OS (UBUNTU specific)
+  command: update-ca-certificates
+  become: yes

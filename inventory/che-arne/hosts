@@ -1,0 +1,36 @@
+[dojo-load-balancer]
+dojo-chea.dojo.g4ihos.itcs.hpecorp.net
+
+[dojo-es]
+dojo-es-chea.dojo.g4ihos.itcs.hpecorp.net
+
+[dojo-ora]
+dojo-ora-chea.dojo.g4ihos.itcs.hpecorp.net
+
+[dojo-trainer]
+team00.dojo.g4ihos.itcs.hpecorp.net
+
+[dojo-node]
+team01.dojo.g4ihos.itcs.hpecorp.net
+team02.dojo.g4ihos.itcs.hpecorp.net
+team03.dojo.g4ihos.itcs.hpecorp.net
+team04.dojo.g4ihos.itcs.hpecorp.net
+team05.dojo.g4ihos.itcs.hpecorp.net
+team06.dojo.g4ihos.itcs.hpecorp.net
+team07.dojo.g4ihos.itcs.hpecorp.net
+team08.dojo.g4ihos.itcs.hpecorp.net
+team09.dojo.g4ihos.itcs.hpecorp.net
+team10.dojo.g4ihos.itcs.hpecorp.net
+team11.dojo.g4ihos.itcs.hpecorp.net
+team12.dojo.g4ihos.itcs.hpecorp.net
+
+[dojo-web:children]
+dojo-trainer
+dojo-node
+
+[openstack:children]
+# dojo-load-balancer
+# dojo-es
+# dojo-ora
+dojo-trainer
+# dojo-node

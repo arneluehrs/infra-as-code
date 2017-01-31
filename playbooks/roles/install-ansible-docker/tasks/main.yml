@@ -1,0 +1,25 @@
+- name: Add EPEL (Extra Packages for Enterprise Linux) repository
+  environment: "{{http_proxy_environment}}"
+  yum:
+    state: present
+    name: epel-release
+
+- name: Install Ansible dependencies
+  environment: "{{http_proxy_environment}}"
+  yum:
+    state: present
+    name:
+      - python-devel
+      - python-pip
+
+- name: Install Ansible Docker integration
+  environment: "{{http_proxy_environment}}"
+  pip:
+    name: "{{item}}"
+  with_items:
+    - docker-py>=1.7.0
+    - docker-compose>=1.7.0
+    - requests
+
+- name: Add ansible user to docker group
+  shell: sudo usermod -aG docker {{ remote_user }}

@@ -1,0 +1,14 @@
+- name: Set hostname
+  hostname:
+    name: "{{inventory_hostname_short}}"
+  become: yes
+
+# See http://docs.ansible.com/ansible/lineinfile_module.html for how 'backrefs' changes behavior
+- name: Alias hostname to FQDN
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "^127.0.1.1.*novalocal"
+    line: "127.0.1.1 {{inventory_hostname}} {{inventory_hostname_short}}"
+    backrefs: yes
+    state: present
+  become: yes

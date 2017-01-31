@@ -1,0 +1,7 @@
+hos_service_account_name: "{{vault_hos_service_account_name}}"
+hos_service_account_password: "{{vault_hos_service_account_password}}"
+oracle_db_admin_user: "{{vault_oracle_db_admin_user}}"
+oracle_db_system_user: "{{vault_oracle_db_system_user}}"
+oracle_admin_user_pass: "{{vault_oracle_admin_user_pass}}"
+oracle_system_user_pass: "{{vault_oracle_system_user_pass}}"
+

@@ -1,0 +1,20 @@
+# OpenStack settings
+
+OS_AUTH_TYPE: v3password
+OS_AUTH_URL: https://g4ihos.itci.hpecorp.net:5000/v3
+OS_DOMAIN_NAME: hpe
+OS_IDENTITY_API_VERSION: 3
+OS_PROJECT_DOMAIN_NAME: default
+OS_PROJECT_NAME: g4ihos:hpit:w-qualcent-dev:dojo
+OS_REGION_NAME: region1
+OS_TENANT_ID: dffb306800304d99b665972c3711e769
+OS_TENANT_NAME: g4ihos:hpit:w-qualcent-dev:dojo
+
+# OpenStack object names
+
+hos_network_name: g4ihos:hpit:w-qualcent-dev:dojo-net
+hos_external_network_name: ext-net
+
+hos_web_security_group_name: web-che
+hos_dojo_security_group_name: dojo-che
+hos_dojo_image_container_name: dojo-images-che

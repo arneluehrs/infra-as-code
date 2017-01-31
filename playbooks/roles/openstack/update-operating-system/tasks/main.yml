@@ -1,0 +1,48 @@
+- name: Update yum cache
+  environment: "{{http_proxy_environment}}"
+  become: yes
+  yum: state=latest name=*
+  register: cache
+  until: cache|success
+  retries: 2
+  delay: 10
+
+- name: Install base tools
+  environment: "{{http_proxy_environment}}"
+  become: yes
+  yum: state=present name={{item}}
+  with_items:
+  - bind-utils
+  - nmap-ncat
+
+  notify:
+  - restart operating system
+
+# - name: Install Ubuntu virtual drivers
+#   environment: "{{http_proxy_environment}}"
+#   become: yes
+#   yum:
+#     name: linux-image-extra-virtual
+#     state: present
+#   register: drivers
+#   until: drivers|success
+#   retries: 2
+#   delay: 10
+#   notify:
+#     - restart operating system
+
+# # TODO: this is tightly bound to the OS version
+# - name: Update kernel
+#   environment: "{{http_proxy_environment}}"
+#   become: yes
+#   yum:
+#     name: linux-generic-lts-wily
+#     install_recommends: yes
+#   register: kernel
+#   until: kernel|success
+#   retries: 2
+#   delay: 10
+#   notify:
+#     - restart operating system
+
+- meta: flush_handlers

@@ -1,0 +1,43 @@
+# Install Docker CS Engine
+# https://docs.docker.com/docker-trusted-registry/install/install-csengine/#centos-7-1-rhel-7-0-7-1-yum-based-systems
+
+# TODO: verify that Docker engine starts with system boot
+
+- name: Add Docker CS yum repository
+  environment: "{{http_proxy_environment}}"
+  yum_repository:
+    name: docker-main-repo
+    description: Docker main Repository
+    baseurl: https://packages.docker.com/1.12/yum/repo/main/centos/7
+    enabled: yes
+    gpgkey: https://pgp.mit.edu/pks/lookup?op=get&search=0xee6d536cf7dc86e2d7d56f59a178ac6c6238f52e
+    gpgcheck: yes
+    state: present
+
+- name: Install Docker CS Engine
+  environment: "{{http_proxy_environment}}"
+  yum:
+    name: docker-engine
+    state: present
+  notify:
+    - reload systemctl daemon
+    - restart docker daemon
+
+- name: Create Docker configuration directory
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: u=rwx,go=rx
+
+- name: Install Docker Engine settings
+  template:
+    src: "{{item}}"
+    dest: /etc/systemd/system/docker.service.d
+  with_items:
+    - docker.conf
+    - proxy.conf
+  notify:
+    - reload systemctl daemon
+    - restart docker daemon
+
+- meta: flush_handlers

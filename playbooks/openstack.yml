@@ -1,0 +1,21 @@
+- hosts: openstack
+  gather_facts: no
+
+  roles:
+    # - role: openstack/provision-storage
+    #   container_name: "{{DOJO_image_container}}"
+    #   delegate_to: localhost
+    #   run_once: true
+
+    - role: openstack/provision-security-groups
+      security_groups: "{{security_group.values()}}"
+      delegate_to: localhost
+      run_once: true
+
+    - role: openstack/provision-host
+#      serial: 1
+      delegate_to: localhost
+
+    - role: openstack/update-operating-system
+    - role: openstack/set-hostname
+    # - role: openstack/install-ca-certificates

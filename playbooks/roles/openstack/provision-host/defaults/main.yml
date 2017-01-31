@@ -1,0 +1,4 @@
+---
+openstack_image: ITIO CentOS-7
+availability_zone: AZ2
+description: DevOps Dojo Node

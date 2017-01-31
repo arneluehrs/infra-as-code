@@ -1,0 +1,8 @@
+---
+- hosts: all
+  environment: "{{http_proxy_environment}}"
+  gather_facts: yes
+  become: yes
+  roles:
+    - role: install-docker-cs-engine
+    - role: install-ansible-docker

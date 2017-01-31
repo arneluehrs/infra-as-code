@@ -1,0 +1,63 @@
+openstack_environment:
+  OS_AUTH_TYPE: "{{OS_AUTH_TYPE}}"
+  OS_AUTH_URL: "{{OS_AUTH_URL}}"
+  OS_DOMAIN_NAME: "{{OS_DOMAIN_NAME}}"
+  OS_IDENTITY_API_VERSION: "{{OS_IDENTITY_API_VERSION}}"
+  OS_PROJECT_DOMAIN_NAME: "{{OS_PROJECT_DOMAIN_NAME}}"
+  OS_PROJECT_NAME: "{{OS_PROJECT_NAME}}"
+  OS_REGION_NAME: "{{OS_REGION_NAME}}"
+  OS_TENANT_ID: "{{OS_TENANT_ID}}"
+  OS_TENANT_NAME: "{{OS_TENANT_NAME}}"
+  OS_USERNAME: "{{hos_service_account_name}}"
+  OS_PASSWORD: "{{hos_service_account_password}}"
+  OS_NO_CACHE: True
+  OS_CACERT: /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+
+# same as above except: OS_DOMAIN_NAME➜OS_USER_DOMAIN_NAME, -OS_PROJECT_*
+# required for DNS API (designate client)
+openstack_user_environment:
+  OS_AUTH_TYPE: "{{openstack_environment.OS_AUTH_TYPE}}"
+  OS_AUTH_URL: "{{openstack_environment.OS_AUTH_URL}}"
+  OS_USER_DOMAIN_NAME: "{{openstack_environment.OS_DOMAIN_NAME}}"
+  OS_IDENTITY_API_VERSION: "{{openstack_environment.OS_IDENTITY_API_VERSION}}"
+  OS_REGION_NAME: "{{openstack_environment.OS_REGION_NAME}}"
+  OS_TENANT_ID: "{{openstack_environment.OS_TENANT_ID}}"
+  OS_TENANT_NAME: "{{openstack_environment.OS_TENANT_NAME}}"
+  OS_USERNAME: "{{openstack_environment.OS_USERNAME}}"
+  OS_PASSWORD: "{{openstack_environment.OS_PASSWORD}}"
+  OS_NO_CACHE: "{{openstack_environment.OS_NO_CACHE}}"
+  OS_CACERT: "{{openstack_environment.OS_CACERT}}"
+
+network: "{{hos_network_name}}"
+external_network: "{{hos_external_network_name}}"
+
+security_group:
+  web:
+    name: "{{hos_web_security_group_name}}"
+    description: HTTP & HTTPS
+    ports:
+      - { port_range_min:    80, port_range_max:    80, protocol: tcp }
+      - { port_range_min:   443, port_range_max:   443, protocol: tcp }
+  dojo:
+    name: "{{hos_dojo_security_group_name}}"
+    description: DevOps-dojo
+    ports:
+      - { port_range_min:    80, port_range_max:    80, protocol: tcp }
+      - { port_range_min:   443, port_range_max:   443, protocol: tcp }
+      - { port_range_min:   111, port_range_max:   111, protocol: tcp }
+      - { port_range_min:   111, port_range_max:   111, protocol: udp }
+      - { port_range_min:  1521, port_range_max:  1521, protocol: tcp }
+      - { port_range_min:  2049, port_range_max:  2049, protocol: tcp }
+      - { port_range_min:  2049, port_range_max:  2049, protocol: udp }
+      - { port_range_min:  5005, port_range_max:  5005, protocol: tcp }
+      - { port_range_min:  5701, port_range_max:  5701, protocol: tcp }
+      - { port_range_min:  8080, port_range_max:  8080, protocol: tcp }
+      - { port_range_min:  8443, port_range_max:  8443, protocol: tcp }
+      - { port_range_min:  9200, port_range_max:  9200, protocol: tcp }
+      - { port_range_min:  9300, port_range_max:  9300, protocol: tcp }
+      - { port_range_min: 20048, port_range_max: 20048, protocol: tcp }
+      - { port_range_min: 20048, port_range_max: 20048, protocol: udp }
+      - { port_range_min: 38248, port_range_max: 38248, protocol: tcp }
+      - { port_range_min: 48697, port_range_max: 48697, protocol: tcp }
+      - { port_range_min: 48697, port_range_max: 48697, protocol: udp }
+      - { port_range_min: 56748, port_range_max: 56748, protocol: udp }

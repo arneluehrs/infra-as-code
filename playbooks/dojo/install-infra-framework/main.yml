@@ -1,0 +1,5 @@
+---
+- name: clone exercises into target
+  git:
+    repo: https://github.com/arneluehrs/infra-as-code.git
+    dest: /home/hos/infra-as-code

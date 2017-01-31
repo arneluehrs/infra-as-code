@@ -1,0 +1,10 @@
+---
+  - include: openstack.yml
+  - include: common.yml
+  - include: docker.yml
+  - include: dojo.yml
+  # - include: elasticsearch.yml
+  # - include: oracle-db.yml
+  # - include: dojo-app.yml
+  # - include: dojo-app-addnode.yml
+  # - include: load-balancers.yml

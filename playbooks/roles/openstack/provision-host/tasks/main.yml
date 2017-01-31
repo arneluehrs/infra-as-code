@@ -1,0 +1,94 @@
+- set_fact:
+    instance_name: "{{instance_name | default(inventory_hostname_short)}}"
+
+- name: Provision host
+  environment: "{{openstack_environment}}"
+  os_server:
+    image: {{ openstack_image }}
+    name: "{{instance_name}}"
+    availability_zone: "{{availability_zone}}"
+    flavor: "{{flavor}}"
+    security_groups: "{{security_groups}}"
+    key_name: nova
+    auto_ip: no
+    state: present
+    wait: true
+  register: host
+  until: host|success
+  retries: 2
+  delay: 20
+
+# This is a custom module contributed by Eric Barrielle that is available in this
+# project's "library" directory
+- name: Provision floating IP address
+  environment: "{{openstack_environment}}"
+  hos_floating_ip:
+    server: "{{instance_name}}"
+    fixed_address: "{{host.server.private_v4}}"
+    state: present
+    network: "{{external_network}}"
+    reuse: yes
+  register: public_ip_address
+  until: public_ip_address|success
+  retries: 2
+  delay: 10
+
+# --------------------------------------------------------------------------------
+# Update DNS
+# http://docs.openstack.org/cli-reference/designate.html
+# --------------------------------------------------------------------------------
+
+# TODO: adjust TTL
+
+- set_fact:
+    ip_address: "{{host.server.private_v4}}"
+    public_ip_address: "{{public_ip_address.address_info.floating_ip_address}}"
+    dns_domain: "{{inventory_hostname | regex_replace('^[^.]+[.]', '')}}"
+
+- name: Get DNS records
+  environment: "{{openstack_user_environment}}"
+  command: "designate record-list -f json {{dns_domain + '.'}}"
+  changed_when: false
+  register: name_records
+  run_once: true
+  #failed_when: name_records.stderr
+  until: name_records|success
+  retries: 2
+
+- name: Find DNS record
+  set_fact:
+    name_record: "{{item}}"
+  when: "{{item.name == inventory_hostname + '.'}}"
+  with_items: "{{name_records.stdout|from_json}}"
+
+- name: Create DNS record
+  environment: "{{openstack_user_environment}}"
+  command: "designate record-create
+                      --type A
+                      --name {{inventory_hostname + '.'}}
+                      --data {{public_ip_address}}
+                      --description '{{description|default(\"\")}}'
+                      --ttl 30
+                      {{dns_domain + '.'}}"
+  when: not name_record is defined
+
+- block:
+  - name: Get domain identifier
+    command: "designate domain-get -f json {{dns_domain + '.'}}"
+    changed_when: false
+    register: domain_record
+    until: domain_record|success
+    retries: 2
+
+  - name: Update DNS record
+    command: "designate record-update
+                        --type A
+                        --name {{inventory_hostname + '.'}}
+                        --data {{public_ip_address}}
+                        --description '{{description|default(\"\")}}'
+                        --ttl 30
+                        {{(domain_record.stdout|from_json).id}} {{name_record.id}}"
+  environment: "{{openstack_user_environment}}"
+  when: name_record is defined
+        and (name_record.name != inventory_hostname + '.'
+             or name_record.data != public_ip_address)

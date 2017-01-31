@@ -1,0 +1,6 @@
+http_proxy_environment:
+  http_proxy: "http://web-proxy.corp.hpecorp.net:8080"
+  https_proxy: "http://web-proxy.corp.hpecorp.net:8080"
+  no_proxy: "localhost,.hpe.com,.hpecorp.net,127.0.0.1,10.0.0.0/16,172.16.1.0/24,192.168.0.0/16"
+  proxy_host: "web-proxy.corp.hpecorp.net"
+  proxy_port: "8080"

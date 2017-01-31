@@ -1,0 +1,8 @@
+- name: Create Object Storage container
+  environment: "{{openstack_environment}}"
+  delegate_to: localhost
+  become: no
+  os_object:
+    container: "{{container_name}}"
+    container_access: private
+    state: present

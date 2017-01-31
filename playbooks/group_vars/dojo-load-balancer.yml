@@ -1,0 +1,8 @@
+flavor: General1.tiny
+
+security_groups:
+  - default
+  - ssh
+  - "{{security_group.dojo.name}}"
+
+backends: "{{groups['dojo-web']}}"

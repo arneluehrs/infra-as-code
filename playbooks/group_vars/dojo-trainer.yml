@@ -1,0 +1,6 @@
+flavor: General1.small
+
+security_groups:
+  - default
+  - ssh
+  - "{{security_group.dojo.name}}"
