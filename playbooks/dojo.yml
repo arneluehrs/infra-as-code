@@ -1,7 +1,8 @@
 ---
-- hosts: all
+- hosts: dojo-trainer
   environment: "{{http_proxy_environment}}"
   gather_facts: yes
-  become: yes
+  become: no
   roles:
-    - role: install-infra-framework
+    - role: dojo/install-infra-framework
+    - role: dojo/install-sample-app

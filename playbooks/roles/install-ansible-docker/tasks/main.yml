@@ -22,4 +22,5 @@
     - requests
 
 - name: Add ansible user to docker group
-  shell: sudo usermod -aG docker {{ remote_user }}
+  become: yes
+  shell: usermod -aG docker {{ remote_user }}

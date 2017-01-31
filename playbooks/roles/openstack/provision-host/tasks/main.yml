@@ -4,7 +4,7 @@
 - name: Provision host
   environment: "{{openstack_environment}}"
   os_server:
-    image: {{ openstack_image }}
+    image: "{{ openstack_image }}"
     name: "{{instance_name}}"
     availability_zone: "{{availability_zone}}"
     flavor: "{{flavor}}"

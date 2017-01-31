@@ -4,4 +4,5 @@
 vault-pwd.txt
 env-dojo.sh
 openstack.rc
+**/vault
 

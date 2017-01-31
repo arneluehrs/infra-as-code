@@ -1,0 +1,28 @@
+---
+- name: clone exercises into target
+  environment: "{{http_proxy_environment}}"
+  git:
+    repo: https://github.com/arneluehrs/infra-as-code.git
+    dest: /home/hos/infra-as-code
+
+- name: Install local hosts file
+  template:
+    src: hosts.j2
+    dest: /home/hos/infra-as-code/inventory/che-arne/hosts
+
+- name: copy supporting files
+  copy:
+    src: vault-pwd.txt
+    dest: /home/hos/infra-as-code/vault-pwd.txt
+
+- name: copy ssh key
+  copy:
+    src: nova.pem
+    dest: /home/hos/.ssh/nova.pem
+    owner: hos
+    mode: 0400
+
+- name: copy sample vault
+  copy:
+    src: vault.sample
+    dest: /home/hos/infra-as-code/inventory/che-arne/group_vars/all/vault

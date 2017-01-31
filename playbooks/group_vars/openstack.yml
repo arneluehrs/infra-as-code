@@ -44,20 +44,9 @@ security_group:
     ports:
       - { port_range_min:    80, port_range_max:    80, protocol: tcp }
       - { port_range_min:   443, port_range_max:   443, protocol: tcp }
-      - { port_range_min:   111, port_range_max:   111, protocol: tcp }
-      - { port_range_min:   111, port_range_max:   111, protocol: udp }
-      - { port_range_min:  1521, port_range_max:  1521, protocol: tcp }
-      - { port_range_min:  2049, port_range_max:  2049, protocol: tcp }
-      - { port_range_min:  2049, port_range_max:  2049, protocol: udp }
-      - { port_range_min:  5005, port_range_max:  5005, protocol: tcp }
-      - { port_range_min:  5701, port_range_max:  5701, protocol: tcp }
+      # - { port_range_min:  5000, port_range_max:  5000, protocol: tcp }
+      - { port_range_min:  5001, port_range_max:  5001, protocol: tcp }
+      - { port_range_min:  5858, port_range_max:  5858, protocol: tcp }
+      - { port_range_min:  6379, port_range_max:  6379, protocol: tcp }
       - { port_range_min:  8080, port_range_max:  8080, protocol: tcp }
       - { port_range_min:  8443, port_range_max:  8443, protocol: tcp }
-      - { port_range_min:  9200, port_range_max:  9200, protocol: tcp }
-      - { port_range_min:  9300, port_range_max:  9300, protocol: tcp }
-      - { port_range_min: 20048, port_range_max: 20048, protocol: tcp }
-      - { port_range_min: 20048, port_range_max: 20048, protocol: udp }
-      - { port_range_min: 38248, port_range_max: 38248, protocol: tcp }
-      - { port_range_min: 48697, port_range_max: 48697, protocol: tcp }
-      - { port_range_min: 48697, port_range_max: 48697, protocol: udp }
-      - { port_range_min: 56748, port_range_max: 56748, protocol: udp }

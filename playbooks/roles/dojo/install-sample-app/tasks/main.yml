@@ -1,0 +1,24 @@
+---
+- name: Clear out sample app
+  shell: rm -rf /home/hos/HPE-VOTING-APP
+
+- name: clone sample-app into target
+  environment: "{{http_proxy_environment}}"
+  git:
+    repo: https://github.com/arneluehrs/HPE-VOTING-APP.git
+    dest: /home/hos/HPE-VOTING-APP
+
+- name: Prime application -load images
+  shell: docker-compose pull
+  args:
+    chdir: /home/hos/HPE-VOTING-APP/
+
+- name: Prime application
+  shell: docker-compose build
+  args:
+    chdir: /home/hos/HPE-VOTING-APP/
+
+- name: Start sample application
+  shell: docker-compose up -d
+  args:
+    chdir: /home/hos/HPE-VOTING-APP/
